@@ -36,8 +36,8 @@ export default function CreateCardPage() {
 
     return (
         <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col h-screen justify-center items-center">
-            <h2 className="text-md md:text-xl text-center">{category}</h2>
-            <h1 className="text-xl md:text-3xl text-green-500 pb-8">Create a New Flashcard</h1>
+            <h2 className="text-lg md:text-xl text-center">{category}</h2>
+            <h1 className="text-2xl md:text-3xl text-green-500 pb-8">Create a New Flashcard</h1>
             <form className="flex flex-col gap-4 w-full md:w-1/2" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label htmlFor="front-side">Front Side:</label>
@@ -59,7 +59,7 @@ export default function CreateCardPage() {
                         className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
-                <button className="mt-4 py-4 w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl cursor-pointer" type="submit">Create Card</button>
+                <button className="mt-8 py-3 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl cursor-pointer" type="submit">Create Card</button>
             </form>
         </div>
     )

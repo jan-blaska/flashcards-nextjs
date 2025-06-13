@@ -11,8 +11,8 @@ type Props = {
 
 export default function Card({ text, className, href, onClick }: Props) {
     const cardComponent =
-        <div className={clsx("rounded-xl text-xl font-semibold text-black bg-white flex justify-center items-center", className)}>
-            <p className="text-lg">{text}</p>
+        <div className={clsx("p-2 md:p-4 text-center rounded-xl text-xl font-semibold text-black bg-white flex justify-center items-center", className)}>
+            <p className="text-lg md:text-2xl">{text}</p>
         </div>
 
     if (href) {

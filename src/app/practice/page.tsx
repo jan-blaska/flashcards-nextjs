@@ -1,6 +1,5 @@
 "use client";
 
-
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ type CardDataProps = {
     backSide?: string;
 };
 
-export default function Practice() {
+export default function PracticePage() {
     const searchParams = useSearchParams();
     const rawCategory = searchParams.get("category");
     const category = rawCategory ? decodeURIComponent(rawCategory) : "Neznámá kategorie";
@@ -80,13 +79,13 @@ export default function Practice() {
         cardsData[currentCardIndex].frontSide;
 
     return (
-        <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col items-center">
+        <div className="flex max-w-2xl w-[95%] mx-auto py-4 md:py-8 flex-col items-center min-h-screen">
             <Link href="/">
                 <h1 className="text-md md:text-xl">Flashcards</h1>
             </Link>
-            <h2 className="text-xl md:text-3xl pb-8 text-center text-green-500">{category}</h2>
-            <Card onClick={handleFlipCard} className="aspect-1/1 md:aspect-2/1 w-full" text={cardText} />
-            <div className="flex flex-col md:flex-row justify-around w-full gap-4 pt-4 md:pt-8">
+            <h2 className="text-xl md:text-3xl pb-4 md:pb-8 text-center text-green-500">{category}</h2>
+            <Card onClick={handleFlipCard} className="flex flex-grow w-full" text={cardText} />
+            <div className="flex flex-row justify-around w-full gap-2 md:gap-4 pt-4 md:pt-8">
                 <Button onClick={handlePreviousCard}>Previous</Button>
                 <Button onClick={handleNextCard}>Next</Button>
             </div>
@@ -95,12 +94,12 @@ export default function Practice() {
                     pathname: "/create-card",
                     query: { category: encodeURIComponent(category) },
                 }}
-                className="mt-4 py-4 w-full text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
+                className="mt-2 md:mt-4 py-4 w-full text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
             >
                 Create
             </Link>
             {currentCardIndex === cardsData.length - 1 &&
-                <Button color="purple" onClick={handleRetry} className="mt-4">
+                <Button color="purple" onClick={handleRetry} className="mt-2 md:mt-4">
                     Retry
                 </Button>}
         </div>

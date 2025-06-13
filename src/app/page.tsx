@@ -4,6 +4,10 @@ import Card from "@/components/Card";
 import { useEffect, useState } from "react";
 import db from "@/utils/firestore";
 import { collection, getDocs } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/utils/firebaseConfig";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
 
 type CardStackProps = {
   name: string;
@@ -11,6 +15,16 @@ type CardStackProps = {
 
 export default function Home() {
   const [cardStacks, setCardStacks] = useState<CardStackProps[]>([]);
+  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    const userSession = sessionStorage.getItem("user");
+
+    if (!user && !userSession) {
+      router.push("/login");
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchCardStacks = async () => {
@@ -52,6 +66,16 @@ export default function Home() {
 
       </div>
       {cardStacks.length === 0 && <span>No Card Stacks</span>}
+      <button
+        onClick={() => {
+          signOut(auth);
+          sessionStorage.removeItem("user");
+        }}
+        className=" text-blue-500 font-bold cursor-pointer mt-16"
+      >
+        Logout
+      </button>
     </div>
+
   );
 }
