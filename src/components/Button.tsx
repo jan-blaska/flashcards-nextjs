@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-type ButtonColor = 'blue' | 'purple';
+type ButtonColor = 'blue' | 'purple' | "red" | "green";
 
 type Props = {
     onClick: () => void;
@@ -11,7 +11,9 @@ type Props = {
 
 const ColorSet = {
     blue: 'bg-blue-500 hover:bg-blue-600',
-    purple: 'bg-purple-500 hover:bg-purple-600'
+    purple: 'bg-purple-500 hover:bg-purple-600',
+    red: 'bg-red-500 hover:bg-red-600',
+    green: 'bg-green-500 hover:bg-green-600',
 }
 
 export default function Button({ onClick, className, children, color }: Props) {
@@ -19,7 +21,7 @@ export default function Button({ onClick, className, children, color }: Props) {
 
     return (
         <button
-            className={clsx("py-4 w-full text-white rounded-xl cursor-pointer ", className, buttonColor)}
+            className={clsx("py-4 w-full text-white rounded-xl cursor-pointer", className, buttonColor)}
             onClick={onClick}>{children}</button>
     );
 }

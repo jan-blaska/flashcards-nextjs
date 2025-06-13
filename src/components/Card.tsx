@@ -1,10 +1,11 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import { UrlObject } from 'url';
 
 type Props = {
     text?: string;
     className?: string;
-    href?: string
+    href?: string | UrlObject;
     onClick?: () => void;
 }
 
@@ -14,7 +15,7 @@ export default function Card({ text, className, href, onClick }: Props) {
             <p className="text-lg">{text}</p>
         </div>
 
-    if (href && href.length > 0) {
+    if (href) {
         return (
             <Link href={href} className={clsx(href ? 'cursor-pointer' : '')}>
                 {cardComponent}
