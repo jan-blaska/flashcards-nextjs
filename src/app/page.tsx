@@ -24,7 +24,7 @@ export default function Home() {
     if (!user && !userSession) {
       router.push("/login");
     }
-  }, [user]);
+  }, [user, router]);
 
   useEffect(() => {
     const fetchCardStacks = async () => {

@@ -9,9 +9,9 @@ export default function SignUpPage() {
     const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
     const router = useRouter();
 
-    const handleSignUp = async (event: any) => {
+    const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.currentTarget);
         const userName = formData.get('user-name');
         const password = formData.get('password');
 
@@ -21,7 +21,7 @@ export default function SignUpPage() {
         } catch (error) {
             console.error("Error signing up:", error);
         }
-        event.target.reset();
+        event.currentTarget.reset();
     }
 
     return (

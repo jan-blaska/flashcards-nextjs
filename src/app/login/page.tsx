@@ -4,15 +4,16 @@ import { auth } from "@/utils/firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import Image from 'next/image';
 
 export default function LoginPage() {
 
     const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
     const router = useRouter();
 
-    const handleLogin = async (event: any) => {
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.currentTarget);
         const userName = formData.get('user-name');
         const password = formData.get('password');
 
@@ -23,7 +24,7 @@ export default function LoginPage() {
         } catch (error) {
             console.error("Error logging in:", error);
         }
-        event.target.reset();
+        event.currentTarget.reset();
     }
 
     const handleGoogleLogin = async () => {
@@ -73,10 +74,11 @@ export default function LoginPage() {
                     onClick={handleGoogleLogin}
                     className="flex items-center justify-center gap-3 py-3 w-full bg-white hover:bg-gray-200 cursor-pointer text-gray-800 font-semibold rounded-xl"
                 >
-                    <img
+                    <Image
                         src="icons/google.svg"
                         alt="Google logo"
-                        className="w-5 h-5"
+                        width={20}
+                        height={20}
                     />
                     Sign in with Google
                 </button>

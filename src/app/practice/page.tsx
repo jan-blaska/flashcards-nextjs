@@ -37,7 +37,7 @@ export default function PracticePage() {
         };
 
         fetchCards();
-    }, []);
+    }, [category]);
 
     const handleNextCard = () => {
         if (currentCardIndex >= cardsData.length - 1) return;

@@ -9,9 +9,9 @@ export default function CreateCardPage() {
     const rawCategory = searchParams.get("category");
     const category = rawCategory ? decodeURIComponent(rawCategory) : "Neznámá kategorie";
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.currentTarget);
         const frontSide = formData.get('front-side');
         const backSide = formData.get('back-side');
 
@@ -31,7 +31,7 @@ export default function CreateCardPage() {
             console.error("Error creating flashcard:", error);
 
         }
-        event.target.reset();
+        event.currentTarget.reset();
     }
 
     return (
