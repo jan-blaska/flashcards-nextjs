@@ -4,9 +4,12 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { useEffect, useState } from "react";
 import db from "@/utils/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/utils/firebaseConfig";
+import Loading from "@/components/common/Loading";
 
 type CardDataProps = {
     frontSide?: string;
@@ -15,29 +18,45 @@ type CardDataProps = {
 
 export default function PracticePage() {
     const searchParams = useSearchParams();
-    const rawCategory = searchParams.get("category");
-    const category = rawCategory ? decodeURIComponent(rawCategory) : "Neznámá kategorie";
+    const categoryId = searchParams.get("categoryId");
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [cardsData, setCardsData] = useState<CardDataProps[]>([]);
+    const [user] = useAuthState(auth);
+    const [categoryName, setCategoryName] = useState<string>("Unknown category");
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchCards = async () => {
+            if (!user || !categoryId) {
+                console.error("User is not authenticated");
+                return;
+            }
+
             try {
-                const querySnapshot = await getDocs(collection(db, "Flashcards", category, "cards"));
+                const categoryRef = doc(db, "users", user.uid, "categories", categoryId);
+                const categorySnapshot = await getDoc(categoryRef);
+
+                if (categorySnapshot.exists()) {
+                    const data = categorySnapshot.data();
+                    setCategoryName(data.name);
+                }
+
+                const querySnapshot = await getDocs(collection(db, "users", user.uid, "categories", categoryId, "cards"));
                 const fetchedCards: CardDataProps[] = [];
                 querySnapshot.forEach((doc) => {
                     fetchedCards.push(doc.data() as CardDataProps);
                 });
                 const shuffledCards = fetchedCards.sort(() => Math.random() - 0.5);
                 setCardsData(shuffledCards);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching cards:", error);
             }
         };
 
         fetchCards();
-    }, [category]);
+    }, [categoryId, user]);
 
     const handleNextCard = () => {
         if (currentCardIndex >= cardsData.length - 1) return;
@@ -62,14 +81,27 @@ export default function PracticePage() {
         setIsFlipped(false);
     };
 
+    if (isLoading) {
+        return <Loading />;
+    }
+
     if (cardsData.length === 0) {
         return (
             <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col items-center">
                 <Link href="/">
                     <h1 className="text-md md:text-xl">Flashcards</h1>
                 </Link>
-                <h2 className="text-xl md:text-3xl pb-8 text-center text-green-500">{category}</h2>
+                <h2 className="text-xl md:text-3xl pb-8 text-center text-green-500">{categoryName}</h2>
                 <span>No cards available. Please create some cards.</span>
+                <Link
+                    href={{
+                        pathname: "/create-card",
+                        query: { categoryId: categoryId },
+                    }}
+                    className="mt-2 md:mt-4 py-4 w-full md:w-1/2 text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
+                >
+                    Create
+                </Link>
             </div>
         );
     }
@@ -83,7 +115,7 @@ export default function PracticePage() {
             <Link href="/">
                 <h1 className="text-md md:text-xl">Flashcards</h1>
             </Link>
-            <h2 className="text-xl md:text-3xl pb-4 md:pb-8 text-center text-green-500">{category}</h2>
+            <h2 className="text-xl md:text-3xl pb-4 md:pb-8 text-center text-green-500">{categoryName}</h2>
             <Card onClick={handleFlipCard} className="flex flex-grow w-full" text={cardText} />
             <div className="flex flex-row justify-around w-full gap-2 md:gap-4 pt-4 md:pt-8">
                 <Button onClick={handlePreviousCard}>Previous</Button>
@@ -92,7 +124,7 @@ export default function PracticePage() {
             <Link
                 href={{
                     pathname: "/create-card",
-                    query: { category: encodeURIComponent(category) },
+                    query: { categoryId: categoryId },
                 }}
                 className="mt-2 md:mt-4 py-4 w-full text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
             >

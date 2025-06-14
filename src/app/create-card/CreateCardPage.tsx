@@ -1,42 +1,84 @@
 "use client";
 
 import db from "@/utils/firestore";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
+import { auth } from "@/utils/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
+import Loading from "@/components/common/Loading";
 
 export default function CreateCardPage() {
     const searchParams = useSearchParams();
-    const rawCategory = searchParams.get("category");
-    const category = rawCategory ? decodeURIComponent(rawCategory) : "Neznámá kategorie";
+    const categoryId = searchParams.get("categoryId");
+    const [user] = useAuthState(auth);
+    const [categoryName, setCategoryName] = useState<string>("Unknown category");
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCategoryName = async () => {
+
+            if (!user || !categoryId) {
+                console.error("User is not authenticated");
+                return;
+            }
+
+            try {
+                const categoryRef = doc(db, "users", user.uid, "categories", categoryId);
+                const categorySnapshot = await getDoc(categoryRef);
+
+                if (categorySnapshot.exists()) {
+                    const data = categorySnapshot.data();
+                    setCategoryName(data.name);
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error("Error fetching card stacks:", error);
+            }
+        };
+
+        fetchCategoryName();
+    }, []);
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+
+        if (!user || !categoryId) {
+            console.error("User is not authenticated");
+            return;
+        }
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
         const frontSide = formData.get('front-side');
         const backSide = formData.get('back-side');
 
-        const category = "Random německá slovíčka";
-
         try {
-            await setDoc(doc(db, "Flashcards", category), {
+            await setDoc(doc(db, "users", user.uid, "categories", categoryId), {
                 createdAt: serverTimestamp(),
             }, { merge: true });
 
-            await addDoc(collection(db, "Flashcards", category, "cards"), {
+            await addDoc(collection(db, "users", user.uid, "categories", categoryId, "cards"), {
                 frontSide: frontSide,
                 backSide: backSide,
+                createdAt: serverTimestamp(),
             });
 
         } catch (error) {
             console.error("Error creating flashcard:", error);
 
         }
-        event.currentTarget.reset();
+        form.reset();
+    }
+
+    if (isLoading) {
+        return <Loading />;
     }
 
     return (
         <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col h-screen justify-center items-center">
-            <h2 className="text-lg md:text-xl text-center">{category}</h2>
+            <h2 className="text-lg md:text-xl text-center">{categoryName}</h2>
             <h1 className="text-2xl md:text-3xl text-green-500 pb-8">Create a New Flashcard</h1>
             <form className="flex flex-col gap-4 w-full md:w-1/2" onSubmit={handleSubmit}>
                 <div className="flex flex-col">
