@@ -40,7 +40,6 @@ export default function LoginPage() {
 
     return (
         <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col h-screen justify-center items-center">
-            <h1 className="text-3xl md:text-4xl text-green-500">Flashcards</h1>
             <h1 className="text-xl md:text-2xl pb-8">Login</h1>
             <form className="flex text-md flex-col gap-4 w-full md:w-1/2" onSubmit={handleLogin}>
                 <div className="flex flex-col">
@@ -72,7 +71,7 @@ export default function LoginPage() {
                 <button
                     type="button"
                     onClick={handleGoogleLogin}
-                    className="flex items-center justify-center gap-3 py-3 w-full bg-white hover:bg-gray-200 cursor-pointer text-gray-800 font-semibold rounded-xl"
+                    className="border-1 flex items-center justify-center gap-3 py-3 w-full bg-white hover:bg-gray-200 cursor-pointer text-gray-800 font-semibold rounded-xl"
                 >
                     <Image
                         src="icons/google.svg"

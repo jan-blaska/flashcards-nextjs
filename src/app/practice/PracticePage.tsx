@@ -87,21 +87,27 @@ export default function PracticePage() {
 
     if (cardsData.length === 0) {
         return (
-            <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col items-center">
-                <Link href="/">
-                    <h1 className="text-md md:text-xl">Flashcards</h1>
-                </Link>
-                <h2 className="text-xl md:text-3xl pb-8 text-center text-green-500">{categoryName}</h2>
-                <span>No cards available. Please create some cards.</span>
-                <Link
-                    href={{
-                        pathname: "/create-card",
-                        query: { categoryId: categoryId },
-                    }}
-                    className="mt-2 md:mt-4 py-4 w-full md:w-1/2 text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
-                >
-                    Create
-                </Link>
+            <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col items-center min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-4rem)]">
+                <div className="flex flex-col items-center">
+                    <h1 className="text-md md:text-xl">category</h1>
+                    <h2 className="text-xl md:text-3xl pb-8 text-center text-green-500">{categoryName}</h2>
+                </div>
+                <div className="flex flex-col flex-grow items-center justify-center w-full">
+                    <div className="text-lg md:text-xl flex flex-col items-center">
+                        <span>There are no cards in this category yet.</span>
+                        <span>Please add some cards.</span>
+                    </div>
+                    <Link
+                        href={{
+                            pathname: "/create-card",
+                            query: { categoryId: categoryId },
+                        }}
+                        className="mt-4 py-4 w-1/2 md:w-1/4 text-white text-lg md:text-xl rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
+                    >
+                        Add First Card
+                    </Link>
+
+                </div>
             </div>
         );
     }
@@ -111,10 +117,8 @@ export default function PracticePage() {
         cardsData[currentCardIndex].frontSide;
 
     return (
-        <div className="flex max-w-2xl w-[95%] mx-auto py-4 md:py-8 flex-col items-center min-h-screen">
-            <Link href="/">
-                <h1 className="text-md md:text-xl">Flashcards</h1>
-            </Link>
+        <div className="flex max-w-2xl w-[95%] mx-auto py-4 md:py-8 flex-col items-center min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-4rem)]">
+            <h1 className="text-md md:text-xl">category</h1>
             <h2 className="text-xl md:text-3xl pb-4 md:pb-8 text-center text-green-500">{categoryName}</h2>
             <Card onClick={handleFlipCard} className="flex flex-grow w-full" text={cardText} />
             <div className="flex flex-row justify-around w-full gap-2 md:gap-4 pt-4 md:pt-8">
@@ -126,9 +130,9 @@ export default function PracticePage() {
                     pathname: "/create-card",
                     query: { categoryId: categoryId },
                 }}
-                className="mt-2 md:mt-4 py-4 w-full text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
+                className="text-lg md:text-xl mt-2 md:mt-4 py-4 w-full text-white rounded-xl cursor-pointer bg-green-500 hover:bg-green-600 text-center"
             >
-                Create
+                Create New Card
             </Link>
             {currentCardIndex === cardsData.length - 1 &&
                 <Button color="purple" onClick={handleRetry} className="mt-2 md:mt-4">

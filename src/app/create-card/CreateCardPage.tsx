@@ -7,6 +7,7 @@ import { auth } from "@/utils/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import Loading from "@/components/common/Loading";
+import Button from "@/components/Button";
 
 export default function CreateCardPage() {
     const searchParams = useSearchParams();
@@ -77,7 +78,7 @@ export default function CreateCardPage() {
     }
 
     return (
-        <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col h-screen justify-center items-center">
+        <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-4rem)] justify-center items-center">
             <h2 className="text-lg md:text-xl text-center">{categoryName}</h2>
             <h1 className="text-2xl md:text-3xl text-green-500 pb-8">Create a New Flashcard</h1>
             <form className="flex flex-col gap-4 w-full md:w-1/2" onSubmit={handleSubmit}>
@@ -101,7 +102,7 @@ export default function CreateCardPage() {
                         className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
-                <button className="mt-8 py-3 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl cursor-pointer" type="submit">Create Card</button>
+                <Button color="blue" type="submit">Create Card</Button>
             </form>
         </div>
     )

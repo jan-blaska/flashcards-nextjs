@@ -10,26 +10,27 @@ type Props = {
 }
 
 export default function Card({ text, className, href, onClick }: Props) {
-    const cardComponent =
-        <div className={clsx("p-2 md:p-4 text-center rounded-xl text-xl font-semibold text-black bg-white flex justify-center items-center", className)}>
-            <p className="text-lg md:text-2xl">{text}</p>
-        </div>
+    const cardClassName = clsx("p-2 md:p-4 text-center rounded-xl text-xl font-semibold bg-(--card) hover:opacity-70 dark:hover:opacity-80 flex justify-center items-center", className);
 
     if (href) {
         return (
-            <Link href={href} className={clsx(href ? 'cursor-pointer' : '')}>
-                {cardComponent}
+            <Link href={href} className={clsx('cursor-pointer', cardClassName)}>
+                <p className="text-lg md:text-2xl">{text}</p>
             </Link>
         )
     }
 
     if (onClick) {
         return (
-            <div onClick={onClick} className={clsx('cursor-pointer', className)}>
-                {cardComponent}
-            </div>
+            <button onClick={onClick} className={clsx('cursor-pointer', cardClassName)}>
+                <p className="text-lg md:text-2xl">{text}</p>
+            </button>
         )
     }
 
-    return cardComponent;
+    return (
+        <div className={cardClassName}>
+            <p className="text-lg md:text-2xl">{text}</p>
+        </div>
+    );
 };

@@ -3,10 +3,11 @@ import clsx from 'clsx';
 type ButtonColor = 'blue' | 'purple' | "red" | "green";
 
 type Props = {
-    onClick: () => void;
+    onClick?: () => void;
     className?: string;
     children?: React.ReactNode;
     color?: ButtonColor;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 const ColorSet = {
@@ -16,12 +17,17 @@ const ColorSet = {
     green: 'bg-green-500 hover:bg-green-600',
 }
 
-export default function Button({ onClick, className, children, color }: Props) {
+export default function Button({ onClick, className, children, color, type }: Props) {
     const buttonColor = color ? ColorSet[color] : ColorSet.blue;
 
     return (
         <button
-            className={clsx("py-4 w-full text-white rounded-xl cursor-pointer", className, buttonColor)}
-            onClick={onClick}>{children}</button>
+            className={clsx("py-4 w-full text-white rounded-xl cursor-pointer text-lg md:text-xl", className, buttonColor)}
+            onClick={onClick}
+            type={type || 'button'}
+        >
+            {children}
+        </button>
+
     );
 }
