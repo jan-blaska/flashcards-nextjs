@@ -1,7 +1,7 @@
 "use client";
 
 import db from "@/utils/firestore";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebaseConfig";
 

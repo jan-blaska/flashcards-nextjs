@@ -38,7 +38,7 @@ export default function CreateCardPage() {
         };
 
         fetchCategoryName();
-    }, []);
+    }, [user, categoryId]);
 
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

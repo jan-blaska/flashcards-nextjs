@@ -52,7 +52,7 @@ export default function Home() {
     };
 
     fetchCategories();
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col items-center">
