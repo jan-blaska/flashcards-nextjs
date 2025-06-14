@@ -39,7 +39,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col h-screen justify-center items-center">
+        <div className="flex max-w-5xl w-[95%] mx-auto py-8 flex-col min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-4rem)] justify-center items-center">
             <h1 className="text-xl md:text-2xl pb-8">Login</h1>
             <form className="flex text-md flex-col gap-4 w-full md:w-1/2" onSubmit={handleLogin}>
                 <div className="flex flex-col">

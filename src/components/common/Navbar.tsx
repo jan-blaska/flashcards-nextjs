@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { signOut } from "firebase/auth";
 import { auth } from '@/utils/firebaseConfig'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import Button from '../Button'
 
 const Navbar = () => {
     const router = useRouter();
@@ -65,20 +66,22 @@ const Navbar = () => {
                                 <span className="font-bold">{user.displayName || user.email}</span>
                             </li>
                         ) : (
-                            <li className="text-gray-500">Nepřihlášen</li>
+                            <li className="text-gray-500">not logged in</li>
                         )}
                         <h3 className='mt-4'>Theme:</h3>
                         <li><ThemeSwitcher /></li>
                         <li className='w-full mt-auto'>
-                            <button
+                            <Button
                                 onClick={() => {
                                     signOut(auth);
                                     sessionStorage.removeItem("user");
+                                    closeMenu();
+                                    router.push("/login");
                                 }}
-                                className="mt-2 md:mt-4 bg-red-500 hover:bg-red-600 rounded-xl text-white font-bold cursor-pointer py-4 w-full"
+                                color="red"
                             >
                                 Logout
-                            </button>
+                            </Button>
                         </li>
                     </ul>
                 </div>
