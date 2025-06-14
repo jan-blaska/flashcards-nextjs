@@ -41,7 +41,7 @@ const Navbar = () => {
             {isOpen && (
                 <div
                     onClick={closeMenu}
-                    className="fixed top-0 left-0 w-screen h-screen bg-black/50 z-5"
+                    className="fixed top-0 left-0 w-screen h-screen backdrop-blur-xs bg-black/30 dark:bg-white/10 z-5"
                 />
             )}
 
