@@ -8,6 +8,7 @@ type Props = {
     children?: React.ReactNode;
     color?: ButtonColor;
     type?: 'button' | 'submit' | 'reset';
+    disabled?: boolean;
 }
 
 const ColorSet = {
@@ -17,14 +18,15 @@ const ColorSet = {
     green: 'bg-green-500 hover:bg-green-600',
 }
 
-export default function Button({ onClick, className, children, color, type }: Props) {
+export default function Button({ onClick, className, children, color, type, disabled }: Props) {
     const buttonColor = color ? ColorSet[color] : ColorSet.blue;
 
     return (
         <button
-            className={clsx("py-4 w-full text-white rounded-xl cursor-pointer text-lg md:text-xl", className, buttonColor)}
+            className={clsx("py-4 w-full text-white rounded-xl text-lg md:text-xl", className, disabled ? "bg-gray-500" : clsx(buttonColor, "cursor-pointer") )}
             onClick={onClick}
             type={type || 'button'}
+            disabled={disabled}
         >
             {children}
         </button>

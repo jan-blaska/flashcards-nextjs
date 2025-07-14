@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/navigation"
 import { IoArrowBack, IoClose, IoSettingsOutline } from "react-icons/io5"
 import ThemeSwitcher from "./ThemeSwitcher"
@@ -14,11 +14,17 @@ const Navbar = () => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [user] = useAuthState(auth)
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
 
     const openMenu = () => setIsOpen(true);
     const closeMenu = () => setIsOpen(false);
 
     const appName = "Flashcards"
+
+    useEffect(() => {
+        const user = sessionStorage.getItem("user");
+        setButtonIsDisabled(user === null);
+    }, []);
 
     return (
         <nav className="w-full bg-(--background) relative flex justify-center h-12 md:h-16 shadow-md dark:shadow-[0_6px_6px_rgba(255,255,255,0.1)] z-50">
@@ -79,6 +85,7 @@ const Navbar = () => {
                                     router.push("/login");
                                 }}
                                 color="red"
+                                disabled={buttonIsDisabled}
                             >
                                 Logout
                             </Button>
