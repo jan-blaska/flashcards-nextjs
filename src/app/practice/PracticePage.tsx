@@ -120,7 +120,7 @@ export default function PracticePage() {
         <div className="flex max-w-2xl w-[95%] mx-auto py-4 md:py-8 flex-col items-center min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-4rem)]">
             <h1 className="text-md md:text-xl">category</h1>
             <h2 className="text-xl md:text-3xl pb-4 md:pb-8 text-center text-green-500">{categoryName}</h2>
-            <Card onClick={handleFlipCard} className="flex flex-grow w-full" text={cardText} />
+            <Card onClick={handleFlipCard} className="flex-grow w-full" text={cardText} />
             <div className="flex flex-row justify-around w-full gap-2 md:gap-4 pt-4 md:pt-8">
                 <Button onClick={handlePreviousCard}>Previous</Button>
                 <Button onClick={handleNextCard}>Next</Button>

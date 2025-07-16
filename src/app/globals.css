@@ -8,6 +8,7 @@
         --green: #65A30D;
         --navbar-background: #3D3A33;
         --card: #F5F5F4;
+        --create-card: #b9f8cf;
     }
 
     .dark {
@@ -16,6 +17,7 @@
         --green: #A2DB8E;
         --navbar-background: #282725;
         --card: #1E1E1E;
+        --create-card: #0d542b;
     }
 
     body {
