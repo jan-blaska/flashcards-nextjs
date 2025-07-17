@@ -99,7 +99,7 @@ export default function EditCardPage() {
         };
 
         fetchCategoryNameAndFlashcard();
-    }, [user, categoryId, flashcardId]);
+    }, [user, categoryId, flashcardId, reset]);
 
     if (isLoading) {
         return <Loading />;

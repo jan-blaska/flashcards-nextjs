@@ -69,7 +69,7 @@ export default function Category() {
                   onClose={() => setCurrentDeleteFlashcardModal(null)}
                 >
                   <p className="text-md">
-                    Are you sure you really want to delete the card "{currentDeleteFlashcardModal.frontSide?.text ?? "unknown card"}" ?
+                    Are you sure you really want to delete the card &quot;{currentDeleteFlashcardModal.frontSide?.text ?? "unknown card"}&quot; ?
                   </p>
                 </Modal>
             }

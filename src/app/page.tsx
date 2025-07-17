@@ -50,7 +50,7 @@ export default function Home() {
             onClose={() => setCurrentDeleteCategoryModal(null)}
           >
             <p className="text-md">
-              Are you sure you really want to delete the category "{currentDeleteCategoryModal.name}" ?
+              Are you sure you really want to delete the category &quot;{currentDeleteCategoryModal.name}&quot; ?
             </p>
           </Modal>
       }
