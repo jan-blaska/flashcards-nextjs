@@ -21,10 +21,10 @@ export default function EditCategoryPage() {
         const fetchCategory = async () => {
           if (!user || !categoryId) return;
           try {
-            const stack: CategoryProps | null = await getCategoryById({userId: user.uid, categoryId: categoryId});
-            if (stack) setCategoryName(stack.name);
+            const category: CategoryProps | null = await getCategoryById({userId: user.uid, categoryId: categoryId});
+            if (category) setCategoryName(category.name);
           } catch (error) {
-            console.error("Error fetching card stacks:", error);
+            console.error("Error fetching category by ID:", error);
           }
         };
         fetchCategory();
@@ -37,15 +37,14 @@ export default function EditCategoryPage() {
             console.error("User is not authenticated");
             return;
         }
+        if (!categoryId) {
+            console.error("category Id is missing");
+            return;
+        }
 
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const newCategoryName = formData.get('new-category-name') as string | null;
-
-        if (!newCategoryName || !categoryId) {
-            console.error("Category name or category Id is missing");
-            return;
-        }
+        const newCategoryName = formData.get('new-category-name') as string;
 
         try {
             await editCategory({

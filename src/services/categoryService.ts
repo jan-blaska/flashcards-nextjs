@@ -7,7 +7,7 @@ type CreateCategoryParams = {
   categoryName: string;
 };
 
-type GetCategoryParams = {
+type GetAllCategoriesParams = {
   userId: string;
 };
 
@@ -34,7 +34,7 @@ export const createCategory = async ({ userId, categoryName }: CreateCategoryPar
   });  
 };
 
-export const getAllCategories = async ({ userId }: GetCategoryParams): Promise<CategoryProps[]> => {
+export const getAllCategories = async ({ userId }: GetAllCategoriesParams): Promise<CategoryProps[]> => {
   const querySnapshot = await getDocs(collection(db, "users", userId, "categories"));
   const stacks: CategoryProps[] = [];
   querySnapshot.forEach((doc) => {

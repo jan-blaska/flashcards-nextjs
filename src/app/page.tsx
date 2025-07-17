@@ -63,7 +63,7 @@ export default function Home() {
               className="aspect-2/3"
               text={stack.name}
               href={{
-                pathname: "/practice",
+                pathname: "/category",
                 query: { categoryId: stack.id },
               }}
               editButtonHref={{

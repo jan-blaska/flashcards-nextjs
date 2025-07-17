@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebaseConfig";
 import Button from "@/components/Button";
 import { createCategory } from "@/services/categoryService";
+import { toast } from "sonner";
 
 export default function CreateCategoryPage() {
 
@@ -19,17 +20,14 @@ export default function CreateCategoryPage() {
 
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const newCategoryName = formData.get('new-category-name') as string | null;
-
-        if (!newCategoryName) {
-            console.error("Category name is missing");
-            return;
-        }
+        const newCategoryName = formData.get('new-category-name') as string;
         
         try {
             await createCategory({userId: user.uid, categoryName: newCategoryName });
+            toast.success("New category has been created!");
         } catch (error) {
             console.error("Error creating new category:", error);
+            toast.error("Something went wrong!");
         }
         
         form.reset();
